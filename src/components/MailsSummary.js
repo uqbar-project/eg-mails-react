@@ -1,3 +1,4 @@
+import { Panel } from 'primereact/panel'
 import React from 'react'
 
 // Componente que sabe mostrar los mails nuevos y los de la última semana
@@ -6,7 +7,7 @@ export const MailsSummary = ({ mails }) => {
   const cantidadSinLeer = mails.filter((mail) => !mail.leido).length
 
   return (
-    <div className="p-m-2 p-p-2">
+    <Panel>
       <span className="p-overlay-badge">
         <i className="pi pi-calendar" style={{ fontSize: '2em' }}></i>
         <span className="p-badge">{cantidadRecientes}</span>
@@ -15,6 +16,6 @@ export const MailsSummary = ({ mails }) => {
         <i className="pi pi-eye" style={{ fontSize: '2em' }}></i>
         <span className="p-badge">{cantidadSinLeer}</span>
       </span>
-    </div>
+    </Panel >
   )
 }
