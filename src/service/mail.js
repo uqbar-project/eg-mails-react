@@ -18,6 +18,15 @@ class MailService {
     return this.mails.filter((mail) => mail.contiene(textoBusqueda))
   }
 
+  async actualizar(mailAActualizar) {
+    const indiceActualizar = this.mails.findIndex((mail) => mail.id === mailAActualizar.id)
+    if (indiceActualizar === -1) {
+      this.mails.push(mailAActualizar)
+    } else {
+      this.mails[indiceActualizar] = mailAActualizar
+    }
+  }
+
 }
 
 export const mailService = new MailService()

@@ -9,17 +9,28 @@ import { MailsSummary } from './MailsSummary'
 
 export const MailReader = () => {
   const [textoBusqueda, setTextoBusqueda] = useState('')
+
   const [mails, setMails] = useState([])
+  // solo para forzar un render
+  const [forceChange, setForceChange] = useState(0)
+
+  const leerMail = async (mail) => {
+    mail.leer()
+    await mailService.actualizar(mail)
+    setForceChange(forceChange + 1)
+  }
 
   useEffect(() => {
-    console.log('texto búsqueda', textoBusqueda)
     // devolvemos una función que manda a actualizar el estado cuando obtiene los mails
-    return async () => {
-      // ojo, el DataTable no admite que la referencia mails tenga objetos
+    const fetchMails = async () => {
+      // ojo, el DataTable no admite que la referencia a Column 
+      // tenga objetos que no sean primitivos
       const mails = await mailService.getMails(textoBusqueda)
       setMails(mails)
     }
-  }, [textoBusqueda])
+
+    fetchMails()
+  }, [textoBusqueda, forceChange])
 
   return (
     <div>
@@ -31,7 +42,7 @@ export const MailReader = () => {
           </div>
         </div>
         <MailsSummary mails={mails} />
-        <MailsGrid mails={mails} />
+        <MailsGrid mails={mails} alLeerMail={async (mail) => leerMail(mail)} />
       </Panel>
     </div >
   )

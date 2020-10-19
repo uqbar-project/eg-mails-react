@@ -10,13 +10,13 @@ export const MailsSummary = ({ mails }) => {
       <div style={{ margin: '1em' }}>
         <span className="p-overlay-badge" title="Mails recientes">
           <i className="pi pi-calendar" style={{ fontSize: '2em' }}></i>
-          <span className="p-badge p-badge-info">{cantidadRecientes}</span>
+          <span data-testid="cantidad-recientes" className="p-badge p-badge-info">{cantidadRecientes}</span>
         </span>
       </div>
       <div style={{ margin: '1em' }}>
         <span className="p-overlay-badge p-m-2" title="Mails sin leer">
           <i className="pi pi-eye" style={{ fontSize: '2em' }}></i>
-          <span className="p-badge p-badge-warning">{cantidadSinLeer}</span>
+          <span data-testid="cantidad-sin-leer" className="p-badge p-badge-warning">{cantidadSinLeer}</span>
         </span>
       </div>
     </div>

@@ -1,9 +1,11 @@
 import { differenceInDays, format } from 'date-fns'
 
 const MAXIMO_TEXTO = 40
+let ultimoId = 1
 
 export class Mail {
   constructor(emisor, asunto, texto, fecha = new Date(), leido = false) {
+    this.id = ultimoId++
     this.fecha = fecha
     this.emisor = emisor
     this.asunto = asunto
@@ -13,6 +15,10 @@ export class Mail {
 
   get fechaCorta() {
     return format(this.fecha, 'dd/MM/yyyy')
+  }
+
+  get fechaOrdenamiento() {
+    return format(this.fecha, 'yyyyMMdd')
   }
 
   get textoCorto() {
@@ -25,7 +31,11 @@ export class Mail {
 
   contiene(texto) {
     const textoMinuscula = texto.toLowerCase()
-    return !texto || this.asunto.toLowerCase().includes(textoMinuscula) || this.texto.toLowerCase().includes(textoMinuscula)
+    return this.asunto.toLowerCase().includes(textoMinuscula) || this.texto.toLowerCase().includes(textoMinuscula)
+  }
+
+  leer() {
+    this.leido = true
   }
 
 }
