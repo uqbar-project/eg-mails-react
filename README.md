@@ -18,6 +18,8 @@ La aplicación cuenta con tres componentes React desarrollados por nosotros:
 - **MailsSummary**: el que nos permite detectar cuántos mails sin leer y cuántos mails recientes tenemos en base a los filtros seleccionados
 - **MailsGrid**: el componente que muestra la lista de mails, permite ordenarlos y marcar como leídos aquellos que están sin leer.
 
+![componentes mails](./images/componentes.png)
+
 ## MailsReader
 
 MailReader tiene como estado:
