@@ -21,14 +21,13 @@ export const MailReader = () => {
   }
 
   useEffect(() => {
-    // devolvemos una función que manda a actualizar el estado cuando obtiene los mails
     const fetchMails = async () => {
-      // ojo, el DataTable no admite que la referencia a Column 
-      // tenga objetos que no sean primitivos
       const mails = await mailService.getMails(textoBusqueda)
       setMails(mails)
     }
 
+    // invocamos a la función que obtiene los mails
+    // en base al criterio de búsqueda
     fetchMails()
   }, [textoBusqueda, forceChange])
 
