@@ -36,7 +36,7 @@ export const MailReader = () => {
       <Panel header="Mails">
         <div className="p-col-12 p-md-4">
           <div className="p-inputgroup">
-            <InputText placeholder="texto a buscar" value={textoBusqueda} onChange={(event) => setTextoBusqueda(event.target.value)} />
+            <InputText placeholder="texto a buscar" data-testid='textSearch' value={textoBusqueda} onChange={(event) => setTextoBusqueda(event.target.value)} />
             <Button icon="pi pi-search" />
           </div>
         </div>

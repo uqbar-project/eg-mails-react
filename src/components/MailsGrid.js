@@ -5,30 +5,30 @@ import React from 'react'
 
 const fechaTemplate = (mail) => {
   return (
-    <span>{mail.fechaCorta}</span>
+    <span data-testid="fecha">{mail.fechaCorta}</span>
   )
 }
 
 const marcarComoLeidoTemplate = (alLeerMail) => (mail) => {
   return (
-    mail.leido ? '' : <Button type="button" icon="pi pi-check" className="p-button-secondary" title="Marcar como leído" onClick={() => alLeerMail(mail)}></Button>
+    mail.leido ? '' : <Button type="button" data-testid={'btnMarcarLeido' + mail.id} icon="pi pi-check" className="p-button-secondary" title="Marcar como leído" onClick={() => alLeerMail(mail)}></Button>
   )
 }
 
 const recienteTemplate = (mail) => {
   return (
     mail.esReciente() ?
-      <span title="Reciente" className="p-badge p-badge-info" style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'center' }}>
+      <span title="Reciente" data-testid={'reciente' + mail.id} className="p-badge p-badge-info icon-badge" style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'center' }}>
         <i className="pi pi-calendar"></i>
       </span> : ''
   )
 }
 
-const leidoTemplate = ({ leido }) => {
+const leidoTemplate = ({ id, leido }) => {
   return (
     leido ?
       '' :
-      <span title="No leído" className="p-badge p-badge-warning" style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'center' }}>
+      <span title="No leído" data-testid={'noLeido' + id} className="p-badge p-badge-warning icon-badge" style={{ display: 'flex', alignItems: 'center', alignContent: 'center', justifyContent: 'center' }}>
         <i className="pi pi-eye"></i>
       </span>
   )
