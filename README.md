@@ -35,10 +35,7 @@ Para mantener la idea del componente como función, utilizamos el hook `useState
 ```js
 export const MailReader = () => {
   const [textoBusqueda, setTextoBusqueda] = useState('')
-
   const [mails, setMails] = useState([])
-  // solo para forzar un render
-  const [forceChange, setForceChange] = useState(0)
 ```
 
 ### useEffect
@@ -46,14 +43,14 @@ export const MailReader = () => {
 Para poder hacer la llamada asincrónica al backend (simulado), utilizaremos el hook `sideEffect` que reemplaza a los eventos `componentDidMount`, `componentDidUpdate` y `componentWillUnmount`.
 
 ```js
-  useEffect(() => {
-    const fetchMails = async () => {
-      const mails = await mailService.getMails(textoBusqueda)
-      setMails(mails)
-    }
+useEffect(() => {
+  const fetchMails = async () => {
+    const mails = await mailService.getMails(textoBusqueda)
+    setMails(mails)
+  }
 
-    fetchMails()
-  }, [textoBusqueda, forceChange])
+  fetchMails()
+}, [textoBusqueda])
 ```
 
 El hook [`useEffect`](https://es.reactjs.org/docs/hooks-effect.html) sirve para ejecutar código una vez que React actualizó el DOM (después de que se evaluó la función `render`). La idea de **efecto** es importante, porque hablamos de él cuando se modifica el estado de un objeto, o cuando se modifica el valor de una referencia.
@@ -281,13 +278,12 @@ es decir:
 const leerMail = async (mail) => {
   mail.leer()
   await mailService.actualizar(mail)
-  setForceChange(forceChange + 1)
-}
+  setMails([...mails])
 ```
 
 - marcamos el mail como leído
 - actualizamos el "backend" representado por el service, en forma asincrónica
-- y por último forzamos un cambio de estado con un valor autoincrementado, para hacer que el MailReader se vuelva a renderizar, y esto causa a su vez el renderizado en cascada de MailsGrid y MailsSummary.
+- y por último forzamos un cambio de estado con una copia de los mails (recordemos que tenemos que mutar el objeto que forma parte del estado), para hacer que el MailReader se vuelva a renderizar, y esto causa a su vez el renderizado en cascada de MailsGrid y MailsSummary.
 
 Sí, es fácil perderse. Para los próximos ejemplos veremos alternativas a esta opción. 
 

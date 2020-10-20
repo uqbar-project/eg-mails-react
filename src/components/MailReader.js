@@ -9,15 +9,19 @@ import { MailsSummary } from './MailsSummary'
 
 export const MailReader = () => {
   const [textoBusqueda, setTextoBusqueda] = useState('')
-
   const [mails, setMails] = useState([])
-  // solo para forzar un render
-  const [forceChange, setForceChange] = useState(0)
 
   const leerMail = async (mail) => {
     mail.leer()
+    // no es necesario hacer esto, pero ojo con avisar al backend
     await mailService.actualizar(mail)
-    setForceChange(forceChange + 1)
+    setMails([...mails])
+
+    // otra variante de un amigo: Dami Pereira
+    // setMails(mails.map((mail) =>
+    //   mail.id === idLeido ? mail.leer() : mail
+    // ))
+    // leer debería ser una función que devuelve un nuevo mail
   }
 
   useEffect(() => {
@@ -29,7 +33,7 @@ export const MailReader = () => {
     // invocamos a la función que obtiene los mails
     // en base al criterio de búsqueda
     fetchMails()
-  }, [textoBusqueda, forceChange])
+  }, [textoBusqueda])
 
   return (
     <div>
