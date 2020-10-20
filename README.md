@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/uqbar-project/eg-mails-react.svg?branch=master)](https://travis-ci.com/uqbar-project/eg-mails-react)
 
-![demo](./video/demo.gif)
+![demo](./video/demoNew.gif)
 
 En este ejemplo podemos ver
 
@@ -174,6 +174,69 @@ const recienteTemplate = (mail) => {
 
 Lo mismo para el caso del elemento leído. 
 
+### Intro a aplicación parcial
+
+Antes de ver cómo marcamos un mail como leído, vamos a contar una característica de los lenguajes funcionales, que es la aplicación parcial.
+
+Supongamos que tenemos una función que sabe sumar dos números:
+
+```js
+const suma = (a, b) => a + b
+```
+
+Nada extraño, podemos invocarla:
+
+```js
+suma(1, 2)
+```
+
+y eso nos da 3. ¿Podemos enviarle menos parámetros que los que espera la función? Sí, pero eso rompe el resultado
+
+```js
+suma(1) = (1, undefined) => 1 + undefined => NaN
+```
+
+Ahora, si definimos la función de esta manera:
+
+```js
+const suma2 = (a) => (b) => a + b
+```
+
+Si la invocamos con todos los parámetros, sigue sumando ambos valores:
+
+```js
+suma2(1)(2) => (a = 1) => (b = 2) => 1 + 2 => 3
+```
+
+Pero si no pasamos todos los parámetros, obtenemos una **nueva función**:
+
+```js
+suma2(1) => (a = 1) => b => 1 + b
+```
+
+Lo que obtenemos es una función, que dado un número te devuelve el siguiente. Esto es útil si queremos usarlo en el contexto de un map, por ejemplo:
+
+```js
+[1, 2, 3, 4, 5].map(suma2(1))
+// devuelve [2, 3, 4, 5, 6]
+```
+
+Lo importante es entender que cuando definimos una función de muchos parámetros como sucesivas funciones que reciben parámetros de a uno, tenemos un poder mucho mayor, el poder de generar nuevas funciones al pasarle menos parámetros. Es lo que en la programación funcional se denomina **aplicación parcial** (porque la aplicación total es la que involucra a todos los parámetros posibles).
+
+En particular, recuerden para su cursada de Paradigmas de Programación, que
+
+```js
+// función sin currificar, al estilo C
+// no admite aplicación parcial
+const suma = (a, b) => a + b
+
+// función currificada
+// admite aplicación parcial
+const suma = (a) => (b) => a + b
+```
+
+Ahora sí, vamos a verlo en acción para entender cómo marcamos un mail como leído.
+
 ### Marcando un mail como leído
 
 El componente hijo `MailsGrid` es el que tiene el botón para marcar como leído un mail. El tema es que recibe los mails como `props`, porque el que maneja el estado es el componente padre: `MailReader`. Entonces, ¿cómo podemos lograr que al presionar el botón haga un cambio de estado?
@@ -227,8 +290,6 @@ const leerMail = async (mail) => {
 - y por último forzamos un cambio de estado con un valor autoincrementado, para hacer que el MailReader se vuelva a renderizar, y esto causa a su vez el renderizado en cascada de MailsGrid y MailsSummary.
 
 Sí, es fácil perderse. Para los próximos ejemplos veremos alternativas a esta opción. 
-
-TODO: Agregar ejemplos de aplicación parcial.
 
 ## Material relacionado
 
