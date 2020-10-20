@@ -291,6 +291,23 @@ const leerMail = async (mail) => {
 
 Sí, es fácil perderse. Para los próximos ejemplos veremos alternativas a esta opción. 
 
+## Testeo unitario avanzado
+
+Dejamos aquí la variante para testear la búsqueda del MailReader, que requiere hacer un findAll* asincrónico para esperar a que todos los componentes hijos se rendericen (recomendamos darle una leída a [este material sobre React Testing Library](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)):
+
+```js
+describe('tests del Mail Reader', () => {
+
+  test('al buscar pasa los mails filtrados a los componentes hijos', async () => {
+    const { getByTestId } = render(<MailReader />)
+    const textSearch = getByTestId('textSearch')
+    userEvent.type(textSearch, 'luz')
+    const spanMail = await screen.findAllByTestId('fecha')
+    expect(spanMail.length).toBe(1)
+  })
+})
+```
+
 ## Material relacionado
 
 - [How the useEffect Hook Works (with Examples)](https://daveceddia.com/useeffect-hook-examples/)

@@ -1,6 +1,8 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import React from 'react'
 
+import { MailReader } from './components/MailReader'
 import { MailsGrid } from './components/MailsGrid'
 import { MailsSummary } from './components/MailsSummary'
 import { mailService } from './service/mail'
@@ -44,3 +46,17 @@ describe('tests del mail grid', () => {
   })
 
 })
+
+describe('tests del Mail Reader', () => {
+
+  // https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
+
+  test('al buscar pasa los mails filtrados a los componentes hijos', async () => {
+    const { getByTestId } = render(<MailReader />)
+    const textSearch = getByTestId('textSearch')
+    userEvent.type(textSearch, 'luz')
+    const spanMail = await screen.findAllByTestId('fecha')
+    expect(spanMail.length).toBe(1)
+  })
+})
+
