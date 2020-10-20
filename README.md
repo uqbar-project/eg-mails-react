@@ -59,7 +59,7 @@ En el ejemplo de arriba vemos cómo
 
 - se define una función asincrónica que le pide los mails al backend
 - luego se invoca a dicha función
-- y se registra como dependencias los estados `textoBusqueda` y `forceChange`. Esto significa que el useEffect se ejecutará la primera vez, y cada vez que cambie el estado del texto de búsqueda o el force change, que veremos más adelante.
+- y se registra como árbol de dependencias el estado `textoBusqueda`. Esto significa que el useEffect se ejecutará la primera vez, y cada vez que cambie el estado del texto de búsqueda.
 
 El ciclo de vida entonces es:
 
