@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Componente que sabe mostrar los mails nuevos y los de la última semana
+// Componente que sabe mostrar los mails nuevos y los leídos
 export const MailsSummary = ({ mails }) => {
   const cantidadRecientes = mails.filter((mail) => mail.esReciente()).length
   const cantidadSinLeer = mails.filter((mail) => !mail.leido).length
