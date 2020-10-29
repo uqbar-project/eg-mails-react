@@ -148,7 +148,25 @@ export const MailsGrid = ({ mails, alLeerMail }) => {
 
 Lo interesante son algunas customizaciones que hicimos:
 
-- en cada `Column` del `DataTable` solo podemos utilizar valores primitivos (no están permitidos objetos), por eso debemos usar una "fechaCorta" que lo formatea a un string `dd/MM/yyyy`. Por otra parte, le asociamos como field `fechaOrdenamiento` para que no ordene primero por el día, sino primero por el año, luego por el mes y por último por el día (el formateo es `yyyyMMdd`)
+- en cada `Column` del `DataTable` solo podemos utilizar valores primitivos (no están permitidos objetos), por eso debemos para la fecha generamos una función `fechaTemplate` que le dice qué expresión JSX renderizar:
+
+```js
+const fechaTemplate = (mail) => {
+  return (
+    <span data-testid="fecha">{mail.fechaCorta}</span>
+  )
+}
+```
+
+"fechaCorta" es un método de negocio que formatea la fecha del string a `dd/MM/yyyy`. 
+
+- Por otra parte, le asociamos como field `fechaOrdenamiento` 
+
+```js
+  <Column header="Fecha" body={fechaTemplate} field="fechaOrdenamiento" sortable></Column>
+```
+
+para que no ordene primero por el día, sino primero por el año, luego por el mes y por último por el día (el formateo es `yyyyMMdd`)
 
 ### Renderizado condicional
 
