@@ -1,11 +1,19 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
+import App from './App'
 
 import { MailReader } from './components/MailReader'
 import { MailsGrid } from './components/MailsGrid'
 import { MailsSummary } from './components/MailsSummary'
 import { mailService } from './service/mail'
+
+describe('smoke test de la app', () => {
+  test('la app levanta', () => {
+    const { getByTestId } = render(<App/>)
+    expect(getByTestId('app')).toBeInTheDocument()
+  })
+})
 
 describe('tests del mail summary', () => {
 

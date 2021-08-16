@@ -6,7 +6,7 @@ import { MailReader } from './components/MailReader'
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" data-testid="app">
       <MailReader />
     </div>
   )
