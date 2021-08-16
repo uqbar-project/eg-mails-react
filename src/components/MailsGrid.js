@@ -2,6 +2,7 @@ import { Button } from 'primereact/button'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React from 'react'
+import { Mail } from '../domain/mail'
 
 const fechaTemplate = (mail) => {
   return (
@@ -9,6 +10,7 @@ const fechaTemplate = (mail) => {
   )
 }
 
+// eslint-disable-next-line react/display-name
 const marcarComoLeidoTemplate = (alLeerMail) => (mail) => {
   return (
     mail.leido ? '' : <Button type="button" data-testid={'btnMarcarLeido' + mail.id} icon="pi pi-check" className="p-button-secondary" title="Marcar como leído" onClick={() => alLeerMail(mail)}></Button>
@@ -47,4 +49,9 @@ export const MailsGrid = ({ mails, alLeerMail }) => {
       <Column body={marcarComoLeidoTemplate(alLeerMail)} ></Column>
     </DataTable >
   )
+}
+
+MailsGrid.propTypes = {
+  mails: [Mail],
+  alLeerMail: () => Promise,
 }

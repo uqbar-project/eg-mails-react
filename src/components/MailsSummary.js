@@ -22,3 +22,7 @@ export const MailsSummary = ({ mails }) => {
     </div>
   )
 }
+
+MailsSummary.propTypes = {
+  mails: [Mail],
+}
