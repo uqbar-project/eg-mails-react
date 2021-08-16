@@ -1,4 +1,5 @@
 import React from 'react'
+import { Mail } from '../domain/mail'
 
 // Componente que sabe mostrar los mails nuevos y los leídos
 export const MailsSummary = ({ mails }) => {
