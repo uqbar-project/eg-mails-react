@@ -10,7 +10,6 @@ const fechaTemplate = (mail) => {
   )
 }
 
-// eslint-disable-next-line react/display-name
 const marcarComoLeidoTemplate = (alLeerMail) => (mail) => {
   return (
     mail.leido ? '' : <Button type="button" data-testid={'btnMarcarLeido' + mail.id} icon="pi pi-check" className="p-button-secondary" title="Marcar como leído" onClick={() => alLeerMail(mail)}></Button>
