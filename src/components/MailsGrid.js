@@ -3,6 +3,7 @@ import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React from 'react'
 import { Mail } from '../domain/mail'
+import PropTypes from 'prop-types'
 
 const fechaTemplate = (mail) => {
   return (
@@ -51,6 +52,8 @@ export const MailsGrid = ({ mails, alLeerMail }) => {
 }
 
 MailsGrid.propTypes = {
-  mails: [Mail],
-  alLeerMail: () => Promise,
+  mails: PropTypes.arrayOf(
+    PropTypes.instanceOf(Mail)
+  ),
+  alLeerMail: PropTypes.func,
 }
