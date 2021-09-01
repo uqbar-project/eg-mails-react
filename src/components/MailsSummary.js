@@ -1,5 +1,6 @@
 import React from 'react'
 import { Mail } from '../domain/mail'
+import PropTypes from 'prop-types'
 
 // Componente que sabe mostrar los mails nuevos y los leídos
 export const MailsSummary = ({ mails }) => {
@@ -25,5 +26,7 @@ export const MailsSummary = ({ mails }) => {
 }
 
 MailsSummary.propTypes = {
-  mails: [Mail],
+  mails: PropTypes.arrayOf(
+    PropTypes.instanceOf(Mail)
+  ),
 }
