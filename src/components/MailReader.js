@@ -45,7 +45,7 @@ export const MailReader = () => {
           </div>
         </div>
         <MailsSummary mails={mails} />
-        <MailsGrid mails={mails} alLeerMail={async (mail) => leerMail(mail)} />
+        <MailsGrid mails={mails} alLeerMail={leerMail} />
       </Panel>
     </div >
   )

@@ -25,8 +25,7 @@ La aplicación cuenta con tres componentes React desarrollados por nosotros:
 MailReader tiene como estado:
 
 - el texto de búsqueda
-- los mails leídos
-- y un estado adicional que permite forzar la búsqueda
+- y los mails
 
 ### useState
 
@@ -40,7 +39,7 @@ export const MailReader = () => {
 
 ### useEffect
 
-Para poder hacer la llamada asincrónica al backend (simulado), utilizaremos el hook `sideEffect` que reemplaza a los eventos `componentDidMount`, `componentDidUpdate` y `componentWillUnmount`.
+Para poder hacer la llamada asincrónica al backend (simulado), utilizaremos el hook `useEffect` que reemplaza a los eventos `componentDidMount`, `componentDidUpdate` y `componentWillUnmount`.
 
 ```js
 useEffect(() => {
@@ -67,7 +66,7 @@ El ciclo de vida entonces es:
 - useEffect() inicial, que dispara una actualización al backend
 - cuando completa, se actualiza el estado de la página, concretamente los mails
 - como el estado cambió, nuevamente se dispara el render, mostrando la lista de mails
-- dado que el useEffect() no está asociado a un cambio de los mails, no se ejecuta ninguna función. Es importante no registrar en el árbol de dependencias la referencia al estado `mails`, porque dado que estamos haciendo un `setMails(mails)`, esto podría generar un loop infinito (render inicial > useEffect inicial que setea los mails > render por cambio de estado de mails > useEffect que se activa ante un cambio en los mails que vuelve a disparar la búsqueda y dispara un cambio de estado por los mails > render por cambio de estado de mails ...)
+- el estado que cambió fue `mails`, que no está asociado a ningún `useEffect` definido. Es importante no registrar en el árbol de dependencias la referencia al estado `mails`, porque dado que estamos haciendo un `setMails(mails)`, esto podría generar un loop infinito (render inicial > useEffect inicial que setea los mails > render por cambio de estado de mails > useEffect que se activa ante un cambio en los mails que vuelve a disparar la búsqueda y dispara un cambio de estado por los mails > render por cambio de estado de mails ...)
 
 ## Buenas prácticas y gotchas del useEffect
 
@@ -259,7 +258,7 @@ El componente hijo `MailsGrid` es el que tiene el botón para marcar como leído
 Para ello, el MailReader le pasa una función en las props, que le dice qué hacer cuando marquen un mail como leído:
 
 ```jsx
-<MailsGrid mails={mails} alLeerMail={async (mail) => leerMail(mail)} />
+<MailsGrid mails={mails} alLeerMail={leerMail} />
 ```
 
 En la definición de MailsGrid (componente hijo) recibimos como props la función asincrónica `alLeerMail`:
@@ -285,12 +284,6 @@ Bueno, se picó un poco, ¿no? La función marcarComoLeidoTemplate recibe como p
 Y la función que devuelve es la que espera `Column`, que dado un mail hace aparecer condicionalmente el botón si el mail no fue leído aun.
 
 Cuando el usuario presiona el botón, se invoca a la función `alLeerMail(mail)`, que termina resolviendo lo que MailReader pidió:
-
-```jsx
-async (mail) => leerMail(mail)
-```
-
-es decir:
 
 ```js
 const leerMail = async (mail) => {
