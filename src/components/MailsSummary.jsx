@@ -1,6 +1,6 @@
-import React from 'react'
 import { Mail } from '../domain/mail'
 import PropTypes from 'prop-types'
+import { Badge } from 'primereact/badge'
 
 // Componente que sabe mostrar los mails nuevos y los leídos
 export const MailsSummary = ({ mails }) => {
@@ -10,15 +10,17 @@ export const MailsSummary = ({ mails }) => {
   return (
     <div style={{ display: 'flex', margin: '1em' }}>
       <div style={{ margin: '1em' }}>
-        <span className="p-overlay-badge" title="Mails recientes">
-          <i className="pi pi-calendar" style={{ fontSize: '2em' }}></i>
-          <span data-testid="cantidad-recientes" className="p-badge p-badge-info">{cantidadRecientes}</span>
+        <span title="Mails recientes">
+          <i className="pi pi-calendar p-overlay-badge" style={{ fontSize: '2.4em' }}>
+            <Badge data-testid="cantidad-recientes" severity="info" value={cantidadRecientes} />
+          </i>
         </span>
       </div>
       <div style={{ margin: '1em' }}>
-        <span className="p-overlay-badge p-m-2" title="Mails sin leer">
-          <i className="pi pi-eye" style={{ fontSize: '2em' }}></i>
-          <span data-testid="cantidad-sin-leer" className="p-badge p-badge-warning">{cantidadSinLeer}</span>
+        <span className="p-m-2" title="Mails sin leer">
+          <i className="pi pi-eye p-overlay-badge" style={{ fontSize: '2.5em' }}>
+            <Badge data-testid="cantidad-sin-leer" severity="warning" value={cantidadSinLeer} />
+          </i>
         </span>
       </div>
     </div>

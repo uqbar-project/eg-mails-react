@@ -1,6 +1,9 @@
 import './App.css'
+import './index.css'
 
-import React from 'react'
+import 'primeicons/primeicons.css'
+import 'primereact/resources/primereact.min.css'
+import 'primereact/resources/themes/saga-blue/theme.css'
 
 import { MailReader } from './components/MailReader'
 
