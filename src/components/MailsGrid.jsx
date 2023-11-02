@@ -1,7 +1,6 @@
 import { Button } from 'primereact/button'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import React from 'react'
 import { Mail } from '../domain/mail'
 import PropTypes from 'prop-types'
 

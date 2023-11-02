@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import React from 'react'
 import App from './App'
 
 import { MailReader } from './components/MailReader'
@@ -65,7 +64,7 @@ describe('tests del Mail Reader', () => {
   test('al buscar pasa los mails filtrados a los componentes hijos', async () => {
     render(<MailReader />)
     const textSearch = screen.getByTestId('textSearch')
-    userEvent.type(textSearch, 'luz')
+    await userEvent.type(textSearch, 'luz')
     const spanMail = await screen.findAllByTestId('fecha')
     expect(spanMail.length).toBe(1)
   })

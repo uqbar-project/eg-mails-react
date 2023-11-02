@@ -1,7 +1,7 @@
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { Panel } from 'primereact/panel'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { mailService } from '../service/mail'
 import { MailsGrid } from './MailsGrid'
