@@ -5,7 +5,7 @@ import App from './App'
 import { MailReader } from './components/MailReader'
 import { MailsGrid } from './components/MailsGrid'
 import { MailsSummary } from './components/MailsSummary'
-import { mailService } from './service/mail'
+import { mailService } from './service/mailService'
 
 describe('smoke test de la app', () => {
   test('la app levanta', async () => {

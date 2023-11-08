@@ -3,7 +3,7 @@ import { InputText } from 'primereact/inputtext'
 import { Panel } from 'primereact/panel'
 import { useEffect, useState } from 'react'
 
-import { mailService } from '../service/mail'
+import { mailService } from '../service/mailService'
 import { MailsGrid } from './MailsGrid'
 import { MailsSummary } from './MailsSummary'
 
