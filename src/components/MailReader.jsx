@@ -30,6 +30,11 @@ export const MailReader = () => {
     setMails(nuevosMails)
   }
 
+  useEffect(() => {
+    buscarMails(textoBusqueda)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   // otra variante más rebuscada
   // es que el InputText tenga el onchange definido como onChange={(event) => setTextoBusqueda(event.target.value)} 
   //

@@ -38,7 +38,7 @@ export const MailsGrid = ({ mails, alLeerMail }) => {
   }
   
   return (
-    <DataTable value={mails} autoLayout={true} className="p-datatable-striped">
+    <DataTable value={mails} className="p-datatable-striped">
       <Column header="Fecha" body={fechaTemplate} field="fechaOrdenamiento" sortable></Column>
       <Column field="emisor" header="Enviado por" sortable></Column>
       <Column field="asunto" header="Asunto" sortable></Column>
