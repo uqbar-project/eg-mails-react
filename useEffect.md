@@ -71,3 +71,4 @@ Cada vez que hay nuevos mails, los componentes hijos reciben como props dicha in
 - la variante que hace el fetch resuelve todo a un único punto donde se resuelve todo
 - y el useEffect además es una función que sirve más para definir _custom hooks_ más que componentes propios de React
 
+Podés profundizar más en [este video](https://www.youtube.com/watch?v=dH6i3GurZW8).
