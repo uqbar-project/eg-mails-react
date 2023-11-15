@@ -1,6 +1,6 @@
 import { subDays } from "date-fns"
-import { Mail } from "../domain/mail"
 import { mailService } from "./mailService"
+import { Mail } from "src/domain/mail"
 
 describe('test del service', () => {
 

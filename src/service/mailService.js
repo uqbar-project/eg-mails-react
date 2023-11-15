@@ -1,6 +1,5 @@
 import { subDays } from 'date-fns'
-
-import { Mail } from '../domain/mail'
+import { Mail } from 'src/domain/mail'
 
 class MailService {
   mails = [

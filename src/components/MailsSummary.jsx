@@ -1,6 +1,6 @@
-import { Mail } from '../domain/mail'
 import PropTypes from 'prop-types'
 import { Badge } from 'primereact/badge'
+import { Mail } from 'src/domain/mail'
 
 // Componente que sabe mostrar los mails nuevos y los leídos
 export const MailsSummary = ({ mails }) => {

@@ -1,8 +1,8 @@
 import { Button } from 'primereact/button'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import { Mail } from '../domain/mail'
 import PropTypes from 'prop-types'
+import { Mail } from 'src/domain/mail'
 
 // Componente que sabe mostrar los mails en una tabla
 export const MailsGrid = ({ mails, alLeerMail }) => {
