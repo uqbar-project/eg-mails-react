@@ -1,39 +1,41 @@
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { Panel } from 'primereact/panel'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { MailsGrid } from './MailsGrid'
 import { MailsSummary } from './MailsSummary'
 import { mailService } from 'src/service/mailService'
+import { useOnInit } from 'src/customHooks/hooks'
 
 export const MailReader = () => {
   const [textoBusqueda, setTextoBusqueda] = useState('')
   const [mails, setMails] = useState([])
-
+  
+  useOnInit(() => buscarMails(textoBusqueda))
+  
   const leerMail = async (mail) => {
     mail.leer()
     // no es necesario hacer esto, pero ojo con avisar al backend
     await mailService.actualizar(mail)
     setMails([...mails])
-
+    
     // setMails(mails.map((mail) =>
     //   mail.id === idLeido ? mail.leer() : mail
     // ))
     // leer debería ser una función que devuelve un nuevo mail
   }
-
+  
   // Variante más simple
   const buscarMails = async (textoBusquedaNuevo) => {
     setTextoBusqueda(textoBusquedaNuevo)
     const nuevosMails = await mailService.getMails(textoBusquedaNuevo)
     setMails(nuevosMails)
   }
+  
+  
 
-  useEffect(() => {
-    buscarMails(textoBusqueda)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+
 
   // otra variante más rebuscada
   // es que el InputText tenga el onchange definido como onChange={(event) => setTextoBusqueda(event.target.value)} 
