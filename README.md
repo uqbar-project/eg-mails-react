@@ -29,7 +29,7 @@ MailReader tiene como estado:
 
 Para mantener la idea del componente como función, utilizamos el hook `useState`:
 
-```js
+```tsx
 export const MailReader = () => {
   const [textoBusqueda, setTextoBusqueda] = useState('')
   const [mails, setMails] = useState([])
@@ -49,8 +49,8 @@ En la nueva variante **no usamos el hook useEffect** y como conclusión es basta
 
 El resumen de los mails leídos y recientes aparece con dos íconos con sus respectivos _badges_. Recibimos la lista de mails y filtramos las cantidades correspondientes:
 
-```js
-export const MailsSummary = ({ mails }) => {
+```tsx
+export const MailsSummary = ({ mails }: { mails: Mail[]}) => {
   const cantidadRecientes = mails.filter((mail) => mail.esReciente()).length
   const cantidadSinLeer = mails.filter((mail) => !mail.leido).length
   ... armamos los badges ...
@@ -72,164 +72,44 @@ edad     // 20
 
 Este componente funcional muestra la lista de mails con un DataTable:
 
-```js
-export const MailsGrid = ({ mails, alLeerMail }) => {
+```tsx
+export const MailsGrid = ({ mails, alLeerMail }: { mails: Mail[], alLeerMail: (mail: Mail) => void}) => {
   return (
-    <DataTable value={mails} autoLayout={true} className="p-datatable-striped">
-      <Column header="Fecha" body={fechaTemplate} field="fechaOrdenamiento" sortable></Column>
-      <Column field="emisor" header="Enviado por" sortable></Column>
-      <Column field="asunto" header="Asunto" sortable></Column>
-      <Column field="texto" header="Texto" sortable></Column>
-      <Column body={recienteTemplate} ></Column>
-      <Column body={leidoTemplate} ></Column>
-      <Column body={marcarComoLeidoTemplate(alLeerMail)} ></Column>
-    </DataTable >
+    <div className="grid">
+      <div className="table header">
+        ... headers ...
+      </div>
+      { mails.map((mail: Mail) => (
+      <div key={'padre' + mail.id}>
+        <div key={mail.id} className="table">
+          <span data-testid="fecha">{mail.fechaCorta}</span>
+          <span>{mail.emisor}</span>
+          <span>{mail.asunto}</span>
+          <span>{mail.texto}</span>
+          <div className="status">
+            {mail.esReciente() && <img className="icon" title="reciente" src="src/assets/recent.svg" data-testid={'reciente-' + mail.id}></img>}
+            {!mail.leido && <img className="icon seleccionable" title="sin leer -> podés hacer click para marcarlo como leído" src="src/assets/pending.svg" data-testid={'no-leido-' + mail.id} onClick={() => alLeerMail(mail)}></img>}
+          </div>
+        </div>
+        <hr/>
+      </div>
+      )) 
+      }
+    </div>
   )
 }
 ```
 
 Lo interesante son algunas customizaciones que hicimos:
 
-- en cada `Column` del `DataTable` solo podemos utilizar valores primitivos (no están permitidos objetos), por eso debemos para la fecha generamos una función `fechaTemplate` que le dice qué expresión JSX renderizar:
-
-```js
-const fechaTemplate = (mail) => {
-  return (
-    <span data-testid="fecha">{mail.fechaCorta}</span>
-  )
-}
-```
-
-"fechaCorta" es un método de negocio que formatea la fecha del string a `dd/MM/yyyy`. 
-
-- Por otra parte, le asociamos como field `fechaOrdenamiento` 
-
-```js
-  <Column header="Fecha" body={fechaTemplate} field="fechaOrdenamiento" sortable></Column>
-```
-
-para que no ordene primero por el día, sino primero por el año, luego por el mes y por último por el día (el formateo es `yyyyMMdd`)
-
-### Renderizado condicional
-
-Para mostrar el ícono de reciente usamos una función que va a recibir el mail y mostrará condicionalmente la expresión JSX que muestra el ícono, o un espacio en blanco:
-
-```jsx
-const recienteTemplate = (mail) => {
-  return (
-    mail.esReciente() ?
-      // si el mail es reciente devuelvo el span
-      <span title="Reciente" ...>
-        <i className="pi pi-calendar"></i>
-      </span> 
-      :
-      // en caso contrario, no muestro nada
-      ''
-  )
-}
-```
-
-Lo mismo para el caso del elemento leído. 
-
-### Intro a aplicación parcial
-
-Antes de ver cómo marcamos un mail como leído, vamos a contar una característica de los lenguajes funcionales, que es la aplicación parcial.
-
-Supongamos que tenemos una función que sabe sumar dos números:
-
-```js
-const suma = (a, b) => a + b
-```
-
-Nada extraño, podemos invocarla:
-
-```js
-suma(1, 2)
-```
-
-y eso nos da 3. ¿Podemos enviarle menos parámetros que los que espera la función? Sí, pero eso rompe el resultado
-
-```js
-suma(1) = (1, undefined) => 1 + undefined => NaN
-```
-
-Ahora, si definimos la función de esta manera:
-
-```js
-const suma2 = (a) => (b) => a + b
-```
-
-Si la invocamos con todos los parámetros, sigue sumando ambos valores:
-
-```js
-suma2(1)(2) => (a = 1) => (b = 2) => 1 + 2 => 3
-```
-
-Pero si no pasamos todos los parámetros, obtenemos una **nueva función**:
-
-```js
-suma2(1) => (a = 1) => b => 1 + b
-```
-
-Lo que obtenemos es una función, que dado un número te devuelve el siguiente. Esto es útil si queremos usarlo en el contexto de un map, por ejemplo:
-
-```js
-[1, 2, 3, 4, 5].map(suma2(1))
-// devuelve [2, 3, 4, 5, 6]
-```
-
-Lo importante es entender que cuando definimos una función de muchos parámetros como sucesivas funciones que reciben parámetros de a uno, tenemos un poder mucho mayor, el poder de generar nuevas funciones al pasarle menos parámetros. Es lo que en la programación funcional se denomina **aplicación parcial** (porque la aplicación total es la que involucra a todos los parámetros posibles).
-
-En particular, recuerden para su cursada de Paradigmas de Programación, que
-
-```js
-// función sin currificar, al estilo C
-// no admite aplicación parcial
-const suma = (a, b) => a + b
-
-// función currificada
-// admite aplicación parcial
-const suma = (a) => (b) => a + b
-```
-
-Ahora sí, vamos a verlo en acción para entender cómo marcamos un mail como leído.
-
-### Marcando un mail como leído
-
-El componente hijo `MailsGrid` es el que tiene el botón para marcar como leído un mail. El tema es que recibe los mails como `props`, porque el que maneja el estado es el componente padre: `MailReader`. Entonces, ¿cómo podemos lograr que al presionar el botón haga un cambio de estado?
-
-Para ello, el MailReader le pasa una función en las props, que le dice qué hacer cuando marquen un mail como leído:
-
-```jsx
-<MailsGrid mails={mails} alLeerMail={leerMail} />
-```
-
-En la definición de MailsGrid (componente hijo) recibimos como props la función asincrónica `alLeerMail`:
-
-```jsx
-<Column body={marcarComoLeidoTemplate(alLeerMail)} ></Column>
-```
-
-Esa función se la pasamos a su vez a marcarComoLeidoTemplate, que es una función que genera el JSX con el botón:
-
-```jsx
-const marcarComoLeidoTemplate = (alLeerMail) => (mail) => {
-  return (
-    mail.leido ? '' : <Button type="button" data-testid={'btnMarcarLeido' + mail.id} icon="pi pi-check" className="p-button-secondary" title="Marcar como leído" onClick={() => alLeerMail(mail)}></Button>
-  )
-}
-```
-
-Bueno, se picó un poco, ¿no? La función marcarComoLeidoTemplate recibe como parámetro una función (la que dice lo que hay que hacer cuando el usuario presione el botón). A su vez, devuelve... otra función!!
-
-![mind blown](https://media2.giphy.com/media/ZF40pid2AozVC/giphy.gif)
-
-Y la función que devuelve es la que espera `Column`, que dado un mail hace aparecer condicionalmente el botón si el mail no fue leído aun.
+- delegamos en el mail la responsabilidad de mostrar su fecha "corta" (con formato `dd/MM/yyyy`). Ésto puede resultar controversial, pero recordemos que el mail es nuestro modelo dentro del frontend, podemos pensar entonces que es un modelo que nos sirve para modelar la vista.
+- para mostrar el ícono de reciente utilizamos un renderizado condicional...
+- ...al igual que para mostrar si el mail fue leído, donde además permitimos que en el caso de hacer click disparemos un cambio de estado a partir de la función que nos pasa **el componente padre**.
 
 Cuando el usuario presiona el botón, se invoca a la función `alLeerMail(mail)`, que termina resolviendo lo que MailReader pidió:
 
-```js
-const leerMail = async (mail) => {
+```ts
+const leerMail = async (mail: Mail) => {
   mail.leer()
   await mailService.actualizar(mail)
   setMails([...mails])
@@ -243,7 +123,7 @@ Sí, es fácil perderse. Para los próximos ejemplos veremos alternativas a esta
 
 ## Testeo unitario avanzado
 
-Dejamos aquí la variante para testear la búsqueda del MailReader, que requiere hacer un findAll* asincrónico para esperar a que todos los componentes hijos se rendericen (recomendamos darle una leída a [este material sobre React Testing Library](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)):
+Dejamos aquí la variante para testear la búsqueda del MailReader, que requiere hacer un findAll asincrónico para esperar a que todos los componentes hijos se rendericen (recomendamos darle una leída a [este material sobre React Testing Library](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)):
 
 ```js
 describe('tests del Mail Reader', () => {
