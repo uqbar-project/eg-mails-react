@@ -137,8 +137,3 @@ describe('tests del Mail Reader', () => {
   })
 })
 ```
-
-## Material relacionado
-
-- [How the useEffect Hook Works (with Examples)](https://daveceddia.com/useeffect-hook-examples/)
-- [How Are Function Components Different from Classes?](https://overreacted.io/how-are-function-components-different-from-classes/)
