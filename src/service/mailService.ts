@@ -13,11 +13,11 @@ class MailService {
     new Mail('rgrisolia@unsam.edu.ar', 'Estoy sin luz', 'Edesur me dejó sin luz, ya hice el reclamo...', new Date(), true),
   ]
 
-  async getMails(textoBusqueda) {
+  async getMails(textoBusqueda: string) {
     return this.mails.filter((mail) => mail.contiene(textoBusqueda))
   }
 
-  async actualizar(mailAActualizar) {
+  async actualizar(mailAActualizar: Mail) {
     const indiceActualizar = this.mails.findIndex((mail) => mail.id === mailAActualizar.id)
     if (indiceActualizar === -1) {
       this.mails.push(mailAActualizar)

@@ -1,8 +1,9 @@
-import { subDays } from "date-fns"
-import { Mail } from "./mail"
+import { subDays } from 'date-fns'
+import { Mail } from './mail'
+import { beforeEach, describe, expect, test } from 'vitest'
 
 describe('Tests de mail', () => {
-  let mail
+  let mail: Mail
 
   beforeEach(() => {
     mail = new Mail('laura.iturbe@tumail.uy', 'Receta moussaka', 'Te mando la receta del moussaka: https://saboresymomentos.es/moussaka-griega-receta-original/', subDays(new Date(), 13))

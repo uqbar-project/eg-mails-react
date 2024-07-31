@@ -1,8 +1,8 @@
 # Ejemplo de Mails
 
-[![Build React App](https://github.com/uqbar-project/eg-mails-react/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/uqbar-project/eg-mails-react/actions/workflows/build.yml) ![coverage](./badges/coverage/coverage.svg)
+[![Build React App](https://github.com/uqbar-project/eg-mails-react/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/uqbar-project/eg-mails-react/actions/workflows/build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-mails-react/graph/badge.svg?token=KLIY60RFSY)](https://codecov.io/gh/uqbar-project/eg-mails-react)
 
-![demo](./video/demoNew.gif)
+![demo](./video/demo2024.gif)
 
 En este ejemplo podemos ver
 
@@ -17,8 +17,6 @@ La aplicación cuenta con tres componentes React desarrollados por nosotros:
 - **MailReader**: el componente "madre" (o padre) que permite ingresar un texto de búsqueda
 - **MailsSummary**: el que nos permite detectar cuántos mails sin leer y cuántos mails recientes tenemos en base a los filtros seleccionados
 - **MailsGrid**: el componente que muestra la lista de mails, permite ordenarlos y marcar como leídos aquellos que están sin leer.
-
-![componentes mails](./images/componentes.png)
 
 ## MailReader
 

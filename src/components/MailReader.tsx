@@ -1,20 +1,19 @@
-import { Button } from 'primereact/button'
-import { InputText } from 'primereact/inputtext'
-import { Panel } from 'primereact/panel'
+import './MailReader.css'
 import { useState } from 'react'
 
 import { MailsGrid } from './MailsGrid'
 import { MailsSummary } from './MailsSummary'
-import { mailService } from 'src/service/mailService'
 import { useOnInit } from 'src/customHooks/hooks'
+import { Mail } from 'src/domain/mail'
+import { mailService } from 'src/service/mailService'
 
 export const MailReader = () => {
   const [textoBusqueda, setTextoBusqueda] = useState('')
-  const [mails, setMails] = useState([])
+  const [mails, setMails] = useState<Mail[]>([])
   
   useOnInit(() => buscarMails(textoBusqueda))
   
-  const leerMail = async (mail) => {
+  const leerMail = async (mail: Mail) => {
     mail.leer()
     // no es necesario hacer esto, pero ojo con avisar al backend
     await mailService.actualizar(mail)
@@ -27,16 +26,12 @@ export const MailReader = () => {
   }
   
   // Variante más simple
-  const buscarMails = async (textoBusquedaNuevo) => {
+  const buscarMails = async (textoBusquedaNuevo: string) => {
     setTextoBusqueda(textoBusquedaNuevo)
     const nuevosMails = await mailService.getMails(textoBusquedaNuevo)
     setMails(nuevosMails)
   }
   
-  
-
-
-
   // otra variante más rebuscada
   // es que el InputText tenga el onchange definido como onChange={(event) => setTextoBusqueda(event.target.value)} 
   //
@@ -50,17 +45,16 @@ export const MailReader = () => {
   // }, [textoBusqueda])
 
   return (
-    <div>
-      <Panel header="Mails">
-        <div className="p-col-12 p-md-4">
-          <div className="p-inputgroup">
-            <InputText placeholder="texto a buscar" data-testid='textSearch' value={textoBusqueda} onChange={(event) => buscarMails(event.target.value)} />
-            <Button icon="pi pi-search" />
-          </div>
+    <div className="main">
+      <h3>Aplicación de Mails</h3>
+      <MailsSummary mails={mails} />
+      <div className="searchGroup">
+        <div>
+          <input type="text" placeholder="texto a buscar" data-testid="textSearch" value={textoBusqueda} onChange={(event) => buscarMails(event.target.value)} className="search" />
+          <img src="src/assets/search.png" className="search"></img>
         </div>
-        <MailsSummary mails={mails} />
-        <MailsGrid mails={mails} alLeerMail={leerMail} />
-      </Panel>
+      </div>
+      <MailsGrid mails={mails} alLeerMail={leerMail} />
     </div >
   )
 }

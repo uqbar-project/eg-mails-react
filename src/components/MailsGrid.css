@@ -1,0 +1,38 @@
+.grid {
+  width: calc(100vw - 2rem);
+}
+
+.table {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 4fr 1fr;
+  margin: 0.5em 0;
+  align-items: baseline;
+}
+
+.header {
+  background-color: rgb(136, 221, 193);
+  border: solid 1px aquamarine;
+  font-weight: bold;
+  padding: 0.5em 0;
+}
+
+hr {
+  color: gray;
+}
+
+.status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.seleccionable:hover {
+  cursor: pointer;
+}

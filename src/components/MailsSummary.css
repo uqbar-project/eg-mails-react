@@ -1,0 +1,23 @@
+.badges {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  margin: 1.5rem 1rem;
+}
+
+.badge {
+  height: 3rem;
+  width: 3rem;
+}
+
+.badge-numero {
+  background-color: rgb(189, 241, 178);
+  border-radius: 20px;
+  font-weight: bold;
+  margin: -1rem;
+  position: absolute;
+  width: 1.65rem;
+  height: 1.65rem;
+  padding: 0.2rem;
+  z-index: -1;
+}

@@ -4,13 +4,10 @@ const MAXIMO_TEXTO = 40
 let ultimoId = 1
 
 export class Mail {
-  constructor(emisor, asunto, texto, fecha = new Date(), leido = false) {
+  public id: number
+
+  constructor(public emisor: string, public asunto: string, public texto: string, public fecha = new Date(), public leido = false) {
     this.id = ultimoId++
-    this.fecha = fecha
-    this.emisor = emisor
-    this.asunto = asunto
-    this.texto = texto
-    this.leido = leido
   }
 
   get fechaCorta() {
@@ -29,7 +26,7 @@ export class Mail {
     return differenceInDays(new Date(), this.fecha) < 7
   }
 
-  contiene(texto) {
+  contiene(texto: string) {
     const textoMinuscula = texto.toLowerCase()
     return this.asunto.toLowerCase().includes(textoMinuscula) || this.texto.toLowerCase().includes(textoMinuscula)
   }
