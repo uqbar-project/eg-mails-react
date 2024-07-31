@@ -6,9 +6,9 @@
 
 En este ejemplo podemos ver
 
-- el uso de React Hooks (`useState` y `useEffect`) para manipular el estado en un componente funcional cuando tenemos que disparar llamadas asincrónicas
+- el uso de React Hooks (`useState` y `useOnInit`) para manipular el estado en un componente funcional cuando tenemos que disparar llamadas asincrónicas
 - cómo podemos pasar una función desde un componente padre a uno hijo para disparar actualizaciones en cascada
-- el renderizado condicional de componentes, recordando que JSX son expresiones (javascript)
+- el renderizado condicional de componentes, recordando que TSX son expresiones (typescript)
 
 ## Componentes React
 
@@ -43,7 +43,7 @@ Para buscar mails utilizamos una función asincrónica que recibe el nuevo texto
 - dispara la búsqueda de mails
 - y ubica el resultado de esa búsqueda en el estado para actualizar la lista de mails
 
-En la nueva variante **no usamos el hook useEffect** y como conclusión es bastante simple de entender. Si querés ver cómo es la implementación con useEffect podés leer [esta página](./useEffect.md).
+En la variante por defecto **no usamos el hook useEffect** y como conclusión es bastante simple de entender. Si querés ver cómo es la implementación con useEffect podés leer [esta página](./useEffect.md). Dado que inicialmente queremos mostrar la lista de mails sin explícitamente hacer una búsqueda, te dejamos el custom hook **useOnInit**, que se define para disparar cambios de estado en la inicialización de nuestro componente. Luego hacemos que el texto de búsqueda dispare los cambios de estado conforme el usuario escriba caracteres.
 
 ## MailsSummary
 
