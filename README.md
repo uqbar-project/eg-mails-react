@@ -56,7 +56,20 @@ export const MailsSummary = ({ mails }: { mails: Mail[]}) => {
   ... armamos los badges ...
 ```
 
-Para calcular las cantidades, recibimos como _props_ únicamente los mails, por eso utilizamos la sintaxis de deconstrucción de objetos:
+Un detalle que no tiene tanto que ver con React sino con css es que para visualizar los badges cerca de nuestros íconos utilizamos el `position: absolute` y un margen negativo, además de utilizar un z-index negativo (para ubicarse por debajo de cada ícono y evitar así taparlo):
+
+```css
+margin: -0.9rem;
+position: absolute;
+width: 1.65rem;
+height: 1.65rem;
+padding: 0.2rem;
+z-index: -1;
+```
+
+## MailsGrid
+
+Este componente funcional muestra la lista de mails con una tabla. Para obtener los _props_ utilizamos la sintaxis de deconstrucción de objetos:
 
 ```js
 const ave = { nombre: 'pepita', edad: 20 }
@@ -68,9 +81,7 @@ nombre   // 'pepita'
 edad     // 20
 ```
 
-## MailsGrid
-
-Este componente funcional muestra la lista de mails con un DataTable:
+Ahora sí, veamos nuestro componente:
 
 ```tsx
 export const MailsGrid = ({ mails, alLeerMail }: { mails: Mail[], alLeerMail: (mail: Mail) => void}) => {

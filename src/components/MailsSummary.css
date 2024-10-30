@@ -11,10 +11,10 @@
 }
 
 .badge-numero {
-  background-color: rgb(189, 241, 178);
+  background-color: rgb(184, 252, 204);
   border-radius: 20px;
   font-weight: bold;
-  margin: -1rem;
+  margin: -0.9rem;
   position: absolute;
   width: 1.65rem;
   height: 1.65rem;
