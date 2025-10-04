@@ -19,7 +19,7 @@ export class Mail {
   }
 
   get textoCorto() {
-    return this.texto.length > MAXIMO_TEXTO ? this.texto.substring(0, MAXIMO_TEXTO - 3) + "..." : this.texto
+    return this.texto.length > MAXIMO_TEXTO ? this.texto.substring(0, MAXIMO_TEXTO - 3) + '...' : this.texto
   }
 
   esReciente() {
