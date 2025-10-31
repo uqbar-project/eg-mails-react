@@ -14,7 +14,7 @@ class MailService {
   ]
 
   async getMails(textoBusqueda: string) {
-    return this.mails.filter((mail) => mail.contiene(textoBusqueda))
+    return this.mails.filter((mail) => !textoBusqueda || mail.contiene(textoBusqueda))
   }
 
   async actualizar(mailAActualizar: Mail) {

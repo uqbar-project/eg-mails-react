@@ -2,7 +2,7 @@ import './MailsGrid.css'
 import { Mail } from 'src/domain/mail'
 
 // Componente que sabe mostrar los mails en una tabla
-export const MailsGrid = ({ mails, alLeerMail }: { mails: Mail[], alLeerMail: (mail: Mail) => void}) => {
+export const MailsGrid = ({ mails, alLeerMail }: { mails: Mail[], alLeerMail: (mail: Mail) => Promise<void> }) => {
   return (
     <div className="grid">
       <div className="table header">
@@ -22,7 +22,7 @@ export const MailsGrid = ({ mails, alLeerMail }: { mails: Mail[], alLeerMail: (m
           <div className="status">
             {mail.esReciente() && <img className="icon" title="reciente" src="src/assets/recent.svg" data-testid={'reciente-' + mail.id}></img>}
             {!mail.leido && <img className="icon seleccionable" title="sin leer -> podés hacer click para marcarlo como leído" src="src/assets/pending.svg" data-testid={'no-leido-' + mail.id} onClick={() => alLeerMail(mail)}></img>}
-          </div>
+            </div>
         </div>
         <hr/>
       </div>
