@@ -1,11 +1,10 @@
-import './MailReader.css'
 import { useRef, useState } from 'react'
-
+import './MailReader.css'
+// import { useOnInit } from 'src/customHooks/hooks'
+import type { Mail } from 'src/domain/mail'
+import { mailService } from 'src/service/mailService'
 import { MailsGrid } from './MailsGrid'
 import { MailsSummary } from './MailsSummary'
-// import { useOnInit } from 'src/customHooks/hooks'
-import { Mail } from 'src/domain/mail'
-import { mailService } from 'src/service/mailService'
 
 export const MailReader = () => {
   const [textoBusqueda, setTextoBusqueda] = useState('')
@@ -17,9 +16,9 @@ export const MailReader = () => {
     const nuevosMails = await mailService.getMails(textoBusquedaNuevo)
     setMails(nuevosMails)
   }
-  
-  // Opción 2 - más rebuscado: el InputText tiene definido onChange={(event) => setTextoBusqueda(event.target.value)} 
-  // y el useEffect detecta cambios en el texto de búsqueda y se encarga de disparar la búsqueda 
+
+  // Opción 2 - más rebuscado: el InputText tiene definido onChange={(event) => setTextoBusqueda(event.target.value)}
+  // y el useEffect detecta cambios en el texto de búsqueda y se encarga de disparar la búsqueda
   // useEffect(() => {
   //   const fetchMails = async () => {
   //     const mails = await mailService.getMails(textoBusqueda)
@@ -52,11 +51,23 @@ export const MailReader = () => {
       <MailsSummary mails={mails} />
       <div className="searchGroup">
         <div>
-          <input type="text" placeholder="texto a buscar" data-testid="textSearch" value={textoBusqueda} onChange={(event) => buscarMails(event.target.value)} className="search" />
-          <img src="src/assets/search.png" className="search"></img>
+          <input
+            type="text"
+            placeholder="texto a buscar"
+            data-testid="textSearch"
+            value={textoBusqueda}
+            onChange={(event) => buscarMails(event.target.value)}
+            className="search"
+          />
+          <img
+            src="src/assets/search.png"
+            className="search"
+            alt=""
+            aria-hidden="true"
+          ></img>
         </div>
       </div>
       <MailsGrid mails={mails} alLeerMail={leerMail} />
-    </div >
+    </div>
   )
 }

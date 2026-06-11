@@ -1,14 +1,19 @@
 import { subDays } from 'date-fns'
-import { Mail } from './mail'
 import { beforeEach, describe, expect, test } from 'vitest'
+import { Mail } from './mail'
 
 describe('Tests de mail', () => {
   let mail: Mail
 
   beforeEach(() => {
-    mail = new Mail('laura.iturbe@tumail.uy', 'Receta moussaka', 'Te mando la receta del moussaka: https://saboresymomentos.es/moussaka-griega-receta-original/', subDays(new Date(), 13))
+    mail = new Mail(
+      'laura.iturbe@tumail.uy',
+      'Receta moussaka',
+      'Te mando la receta del moussaka: https://saboresymomentos.es/moussaka-griega-receta-original/',
+      subDays(new Date(), 13)
+    )
   })
-  
+
   test('el mail originalmente no está leido', () => {
     expect(mail.leido).toBeFalsy()
   })
@@ -23,7 +28,12 @@ describe('Tests de mail', () => {
   })
 
   test('el texto corto de un mail no muy extenso muestra toda la descripción', () => {
-    const mailCorto = new Mail('laura.iturbe@tumail.uy', 'Receta moussaka', 'Hola!', subDays(new Date(), 13))
+    const mailCorto = new Mail(
+      'laura.iturbe@tumail.uy',
+      'Receta moussaka',
+      'Hola!',
+      subDays(new Date(), 13)
+    )
     expect(mailCorto.textoCorto).toBe('Hola!')
   })
 

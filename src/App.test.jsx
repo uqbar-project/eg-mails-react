@@ -1,25 +1,25 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { describe, expect, test } from 'vitest'
 import App from './App'
-
 import { MailReader } from './components/MailReader'
 import { MailsGrid } from './components/MailsGrid'
 import { MailsSummary } from './components/MailsSummary'
 import { mailService } from './service/mailService'
-import { describe, expect, test } from 'vitest'
 
 describe('smoke test de la app', () => {
   test('la app levanta', async () => {
-    render(<App/>)
+    render(<App />)
     // Nota: el waitFor no es estrictamente necesario para que el test pase,
-    // solamente es para que no aparezca un mensaje de advertencia de usar act() 
+    // solamente es para que no aparezca un mensaje de advertencia de usar act()
     // para más info: https://javascript.plainenglish.io/you-probably-dont-need-act-in-your-react-tests-2a0bcd2ad65c
-    await waitFor(() => {   expect(screen.getByTestId('app')).toBeTruthy() })
+    await waitFor(() => {
+      expect(screen.getByTestId('app')).toBeTruthy()
+    })
   })
 })
 
 describe('tests del mail summary', () => {
-
   test('recupera la cantidad de recientes', () => {
     render(<MailsSummary mails={mailService.mails} />)
     expect(screen.getByTestId('cantidad-recientes').textContent).toBe('3')
@@ -29,30 +29,25 @@ describe('tests del mail summary', () => {
     render(<MailsSummary mails={mailService.mails} />)
     expect(screen.getByTestId('cantidad-sin-leer').textContent).toBe('4')
   })
-
 })
 
-
 describe('tests del mail grid', () => {
-
   test('muestra un mail reciente con el ícono adecuado', () => {
     const mails = mailService.mails
     render(<MailsGrid mails={mails} />)
     const mailReciente = mails.find((mail) => mail.esReciente())
-    expect(screen.getByTestId('reciente-' + mailReciente.id)).toBeTruthy()
+    expect(screen.getByTestId(`reciente-${mailReciente.id}`)).toBeTruthy()
   })
 
   test('muestra un mail no leído con el ícono adecuado', () => {
     const mails = mailService.mails
     render(<MailsGrid mails={mails} />)
     const mailNoLeido = mails.find((mail) => !mail.leido)
-    expect(screen.getByTestId('no-leido-' + mailNoLeido.id)).toBeTruthy()
+    expect(screen.getByTestId(`no-leido-${mailNoLeido.id}`)).toBeTruthy()
   })
-
 })
 
 describe('tests del Mail Reader', () => {
-
   // https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
 
   test('al buscar pasa los mails filtrados a los componentes hijos', async () => {
@@ -63,4 +58,3 @@ describe('tests del Mail Reader', () => {
     expect(spanMail.length).toBe(1)
   })
 })
-
