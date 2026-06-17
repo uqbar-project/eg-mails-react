@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import './MailReader.css'
+import searchIcon from 'src/assets/search.png'
 // import { useOnInit } from 'src/customHooks/hooks'
 import type { Mail } from 'src/domain/mail'
 import { mailService } from 'src/service/mailService'
@@ -60,7 +61,7 @@ export const MailReader = () => {
             className="search"
           />
           <img
-            src="src/assets/search.png"
+            src={searchIcon}
             className="search"
             alt=""
             aria-hidden="true"

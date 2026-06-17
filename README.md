@@ -56,15 +56,17 @@ export const MailsSummary = ({ mails }: { mails: Mail[]}) => {
   ... armamos los badges ...
 ```
 
-Un detalle que no tiene tanto que ver con React sino con css es que para visualizar los badges cerca de nuestros íconos utilizamos el `position: absolute` y un margen negativo, además de utilizar un z-index negativo (para ubicarse por debajo de cada ícono y evitar así taparlo):
+Un detalle que no tiene tanto que ver con React sino con css es que para visualizar los badges cerca de nuestros íconos utilizamos el `position: absolute` con posicionamiento `top` y `right` negativos, además de utilizar un z-index positivo (para ubicarse por encima de cada ícono):
 
 ```css
-margin: -0.9rem;
 position: absolute;
-width: 1.65rem;
-height: 1.65rem;
+width: 0.9rem;
+height: 0.9rem;
 padding: 0.2rem;
-z-index: -1;
+z-index: 1;
+top: -0.3rem;
+right: -0.55rem;
+font-size: 0.65rem;
 ```
 
 ## MailsGrid
@@ -84,28 +86,47 @@ edad     // 20
 Ahora sí, veamos nuestro componente:
 
 ```tsx
-export const MailsGrid = ({ mails, alLeerMail }: { mails: Mail[], alLeerMail: (mail: Mail) => void}) => {
+export const MailsGrid = ({ mails, alLeerMail }: { mails: Mail[], alLeerMail: (mail: Mail) => Promise<void>}) => {
   return (
     <div className="grid">
       <div className="table header">
         ... headers ...
       </div>
-      { mails.map((mail: Mail) => (
-      <div key={'padre' + mail.id}>
-        <div key={mail.id} className="table">
-          <span data-testid="fecha">{mail.fechaCorta}</span>
-          <span>{mail.emisor}</span>
-          <span>{mail.asunto}</span>
-          <span>{mail.texto}</span>
-          <div className="status">
-            {mail.esReciente() && <img className="icon" title="reciente" src="src/assets/recent.svg" data-testid={'reciente-' + mail.id}></img>}
-            {!mail.leido && <img className="icon seleccionable" title="sin leer -> podés hacer click para marcarlo como leído" src="src/assets/pending.svg" data-testid={'no-leido-' + mail.id} onClick={() => alLeerMail(mail)}></img>}
+      {mails.map((mail: Mail) => (
+        <div key={`padre${mail.id}`}>
+          <div key={mail.id} className="table">
+            <span data-testid="fecha">{mail.fechaCorta}</span>
+            <span>{mail.emisor}</span>
+            <span>{mail.asunto}</span>
+            <span>{mail.texto}</span>
+            <div className="status">
+              {mail.esReciente() && (
+                <img
+                  className="icon"
+                  title="reciente"
+                  src={recentIcon}
+                  data-testid={`reciente-${mail.id}`}
+                  alt=""
+                  aria-hidden="true"
+                ></img>
+              )}
+              {!mail.leido && (
+                <button
+                  className="icon seleccionable"
+                  title="sin leer -> podés hacer click para marcarlo como leído"
+                  onClick={() => alLeerMail(mail)}
+                  data-testid={`no-leido-${mail.id}`}
+                  aria-label="Marcar como leído"
+                  type="button"
+                >
+                  <img src={pendingIcon} alt="" aria-hidden="true" />
+                </button>
+              )}
+            </div>
           </div>
+          <hr />
         </div>
-        <hr/>
-      </div>
-      )) 
-      }
+      ))}
     </div>
   )
 }

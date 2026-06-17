@@ -5,7 +5,10 @@ import App from './App'
 import { MailReader } from './components/MailReader'
 import { MailsGrid } from './components/MailsGrid'
 import { MailsSummary } from './components/MailsSummary'
+import type { Mail } from './domain/mail'
 import { mailService } from './service/mailService'
+
+const emptyClosure = (_mail: Mail) => Promise.resolve()
 
 describe('smoke test de la app', () => {
   test('la app levanta', async () => {
@@ -34,15 +37,21 @@ describe('tests del mail summary', () => {
 describe('tests del mail grid', () => {
   test('muestra un mail reciente con el ícono adecuado', () => {
     const mails = mailService.mails
-    render(<MailsGrid mails={mails} />)
+    render(<MailsGrid mails={mails} alLeerMail={emptyClosure} />)
     const mailReciente = mails.find((mail) => mail.esReciente())
+    if (!mailReciente) {
+      throw new Error('No se encontró un mail reciente')
+    }
     expect(screen.getByTestId(`reciente-${mailReciente.id}`)).toBeTruthy()
   })
 
   test('muestra un mail no leído con el ícono adecuado', () => {
     const mails = mailService.mails
-    render(<MailsGrid mails={mails} />)
+    render(<MailsGrid mails={mails} alLeerMail={emptyClosure} />)
     const mailNoLeido = mails.find((mail) => !mail.leido)
+    if (!mailNoLeido) {
+      throw new Error('No se encontró un mail no leído')
+    }
     expect(screen.getByTestId(`no-leido-${mailNoLeido.id}`)).toBeTruthy()
   })
 })
