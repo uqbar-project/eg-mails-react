@@ -6,7 +6,13 @@ let ultimoId = 1
 export class Mail {
   public id: number
 
-  constructor(public emisor: string, public asunto: string, public texto: string, public fecha = new Date(), public leido = false) {
+  constructor(
+    public emisor: string,
+    public asunto: string,
+    public texto: string,
+    public fecha = new Date(),
+    public leido = false
+  ) {
     this.id = ultimoId++
   }
 
@@ -19,7 +25,9 @@ export class Mail {
   }
 
   get textoCorto() {
-    return this.texto.length > MAXIMO_TEXTO ? this.texto.substring(0, MAXIMO_TEXTO - 3) + '...' : this.texto
+    return this.texto.length > MAXIMO_TEXTO
+      ? `${this.texto.substring(0, MAXIMO_TEXTO - 3)}...`
+      : this.texto
   }
 
   esReciente() {
@@ -28,11 +36,13 @@ export class Mail {
 
   contiene(texto: string) {
     const textoMinuscula = texto.toLowerCase()
-    return this.asunto.toLowerCase().includes(textoMinuscula) || this.texto.toLowerCase().includes(textoMinuscula)
+    return (
+      this.asunto.toLowerCase().includes(textoMinuscula) ||
+      this.texto.toLowerCase().includes(textoMinuscula)
+    )
   }
 
   leer() {
     this.leido = true
   }
-
 }

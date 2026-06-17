@@ -5,19 +5,31 @@
   margin: 1.5rem 1rem;
 }
 
+.badges > span {
+  position: relative;
+}
+
 .badge {
-  height: 3rem;
-  width: 3rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  display: inline-block;
 }
 
 .badge-numero {
-  background-color: rgb(184, 252, 204);
+  background-color: var(--color-primary);
   border-radius: 20px;
   font-weight: bold;
-  margin: -0.9rem;
+  color: white;
   position: absolute;
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 0.9rem;
+  height: 0.9rem;
   padding: 0.2rem;
-  z-index: -1;
+  z-index: 1;
+  top: -0.3rem;
+  right: -0.55rem;
+  font-size: 0.65rem;
+}
+
+.badges > span:nth-child(2) .badge-numero {
+  background-color: var(--color-alert);
 }

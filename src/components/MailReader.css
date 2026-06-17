@@ -15,8 +15,9 @@ h3 {
 }
 
 input.search {
-  padding: 1em 1em;
+  padding: 0.75em 1em;
   border: 1px solid black;
+  border-radius: 4px;
   width: 50em;
   font-size: 0.9em;
 }
