@@ -18,7 +18,7 @@ export const MailsGrid = ({
         <span>Emisor</span>
         <span>Asunto</span>
         <span>Texto</span>
-        <span></span>
+        <span />
       </div>
       {mails.map((mail: Mail) => (
         <div key={`padre${mail.id}`}>
@@ -36,7 +36,7 @@ export const MailsGrid = ({
                   data-testid={`reciente-${mail.id}`}
                   alt=""
                   aria-hidden="true"
-                ></img>
+                />
               )}
               {!mail.leido && (
                 <button

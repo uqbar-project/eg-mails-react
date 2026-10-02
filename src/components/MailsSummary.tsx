@@ -11,23 +11,13 @@ export const MailsSummary = ({ mails }: { mails: Mail[] }) => {
   return (
     <div className="badges">
       <span title="Mails recientes">
-        <img
-          src={badgeRecent}
-          className="badge"
-          alt=""
-          aria-hidden="true"
-        ></img>
+        <img src={badgeRecent} className="badge" alt="" aria-hidden="true" />
         <span className="badge-numero" data-testid="cantidad-recientes">
           {cantidadRecientes}
         </span>
       </span>
       <span title="Mails sin leer">
-        <img
-          src={badgeUnread}
-          className="badge"
-          alt=""
-          aria-hidden="true"
-        ></img>
+        <img src={badgeUnread} className="badge" alt="" aria-hidden="true" />
         <span className="badge-numero" data-testid="cantidad-sin-leer">
           {cantidadSinLeer}
         </span>

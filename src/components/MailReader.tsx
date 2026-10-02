@@ -60,12 +60,7 @@ export const MailReader = () => {
             onChange={(event) => buscarMails(event.target.value)}
             className="search"
           />
-          <img
-            src={searchIcon}
-            className="search"
-            alt=""
-            aria-hidden="true"
-          ></img>
+          <img src={searchIcon} className="search" alt="" aria-hidden="true" />
         </div>
       </div>
       <MailsGrid mails={mails} alLeerMail={leerMail} />
